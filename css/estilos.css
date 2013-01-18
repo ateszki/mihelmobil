@@ -1,0 +1,189 @@
+/*.ui-icon {
+}*/
+/*
+.ui-header {
+  position: relative;
+  z-index:2;
+  top:0px;
+  left:0px;
+}
+.ui-footer{
+  position:absolute; z-index:2;
+  bottom:0; left:0;
+  width: 100%;
+}
+
+#wrapper {
+	position:absolute; z-index:1;
+	top:40px; bottom:54px; left:0px;
+	width:100%;
+	overflow:auto;
+	background-size: 100% 1%;
+	-webkit-background-size:100% 1%;
+	-moz-background-size: 100% 1%;
+	-o-background-size: 100% 1%;
+	margin:0;
+	padding:0 10px 0 0;
+}
+#scroller {
+	position:absolute; z-index:1;
+	width:100%;
+	padding:0 0 40px;
+	left:0;
+}
+*/
+   .iscroll-content li  {
+     -webkit-transform: translateZ(0);
+   }
+/*div[data-role="footer"] {
+	display:none !important;
+}
+*/
+span.ui-btn-text {
+	font-size: 11px;
+	font-weight: normal;
+}
+.ui-icon-heladera {
+	background:none;
+	border:none;
+	border-radius: 0; 
+	-moz-border-radius: 0; 
+	-webkit-border-radius: 0; 
+	height: 24px; 
+	width: 24px;
+
+	background-image: url("images/ico-heladera-24.png");
+	margin-left: -12px !important;
+	-moz-box-shadow: none !important;
+	-webkit-box-shadow: none !important;
+	box-shadow: none !important;
+}
+.ui-icon-explorar {
+	background:none;
+	border:none;
+	border-radius: 0; 
+	-moz-border-radius: 0; 
+	-webkit-border-radius: 0; 
+	height: 24px; 
+	width: 24px;
+
+	background-image: url("images/ico-explorar-24.png");
+	margin-left: -12px !important;
+	-moz-box-shadow: none !important;
+	-webkit-box-shadow: none !important;
+	box-shadow: none !important;
+}
+.ui-icon-cuenta {
+	background:none;
+	border:none;
+	border-radius: 0; 
+	-moz-border-radius: 0; 
+	-webkit-border-radius: 0; 
+	height: 24px; 
+	width: 24px;
+
+	background-image: url("images/ico-cuenta-24.png");
+	margin-left: -12px !important;
+	-moz-box-shadow: none !important;
+	-webkit-box-shadow: none !important;
+	box-shadow: none !important;
+}
+.ui-icon-ofertas {
+	background:none;
+	border:none;
+	border-radius: 0; 
+	-moz-border-radius: 0; 
+	-webkit-border-radius: 0; 
+	height: 24px; 
+	width: 24px;
+
+	background-image: url("images/ico-ofertas-24.png");
+	margin-left: -12px !important;
+	-moz-box-shadow: none !important;
+	-webkit-box-shadow: none !important;
+	box-shadow: none !important;
+}
+div.listacomer ul li {
+	min-height: 50px;
+}
+div.listacomer ul li div {
+	float:left;
+	padding:0;
+	margin:0;
+}
+div.listacomer ul li div a img {
+	vertical-align: top;
+}
+div.listacomer ul li div.comercio-logo {
+	width: 50px;
+	height:50px;
+}
+div.listacomer ul li div.comercio-detalle {
+	height:50px;
+	width: 6em;
+}
+div.listacomer ul li div.comercio-detalle a.nombre {
+	color:#e85a5a;
+	text-decoration:none;
+}
+div.listacomer ul li div.comercio-pegardespegar {
+	width: 50px;
+	height:50px;
+	float: right;
+}
+div.listacomer ul li div.comercio-llamar {
+	width: 50px;
+	height:50px;
+	float: right;
+}
+/*reset listas*/
+*.ui-listview *.ui-btn-up-c,
+*.ui-listview *.ui-btn-down-c,
+*.ui-listview *.ui-btn-hover-c
+  {
+  /* Copy your .ui-btn-up styles here */
+     -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: #EEEEEE;
+    background-image: linear-gradient(#FFFFFF, #F1F1F1);
+    background-origin: padding-box;
+    background-position: 0 0;
+    background-repeat: repeat;
+    background-size: auto auto;
+    border-bottom-color: #CCCCCC;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-image-outset: 0 0 0 0;
+    border-image-repeat: stretch stretch;
+    border-image-slice: 100% 100% 100% 100%;
+    border-image-source: none;
+    border-image-width: 1 1 1 1;
+    border-left-color-ltr-source: physical;
+    border-left-color-rtl-source: physical;
+    border-left-color-value: #CCCCCC;
+    border-left-style-ltr-source: physical;
+    border-left-style-rtl-source: physical;
+    border-left-style-value: solid;
+    border-left-width-ltr-source: physical;
+    border-left-width-rtl-source: physical;
+    border-left-width-value: 1px;
+    border-right-color-ltr-source: physical;
+    border-right-color-rtl-source: physical;
+    border-right-color-value: #CCCCCC;
+    border-right-style-ltr-source: physical;
+    border-right-style-rtl-source: physical;
+    border-right-style-value: solid;
+    border-right-width-ltr-source: physical;
+    border-right-width-rtl-source: physical;
+    border-right-width-value: 1px;
+    border-top-color: #CCCCCC;
+    border-top-style: solid;
+    border-top-width: 1px;
+    color: #2F3E46;
+    font-weight: bold;
+    text-shadow: 0 1px 0 #FFFFFF; }
+/*fin reset-listas*/
