@@ -509,7 +509,7 @@ window.MiHeladeraView = genericView.extend({ // Backbone.View.extend({
 	  },error:function(collection,xhr,options){
 	  			console.log(xhr.state());
 	  			if(xhr.state() == 'rejected'){
-	  				app.navigate("login");
+	  				app.navigate("login",{trigger: true});
 	  			}
 	  			
 			}
@@ -591,7 +591,7 @@ window.ExplorarView = genericView.extend({// Backbone.View.extend({
 	  },error:function(collection,xhr,options){
 	  			console.log(xhr.state());
 	  			if(xhr.state() == 'rejected'){
-	  				app.navigate("login");
+	  				app.navigate("login",{trigger: true});
 	  			}
 	  			
 			}
@@ -612,49 +612,7 @@ window.ExplorarView = genericView.extend({// Backbone.View.extend({
     },
 
 });
-/*
-window.ExplorarBarrioView = genericView.extend({// Backbone.View.extend({
-	
-    //template:_.template($('#Explorar').html()),
-	//template: _.template(templates.explorar_barrio),
-	initialize: function(){
-		this.checkBarrio();
-		b = this.getBarrio();
-		console.log(b);
-		this.barrio = b.barrio; 
-		this.barrio_id = b.barrio_id; 
-		this.template = _.template(templates.explorar_barrio,{'barrio': b.barrio});
-		////console.debug(this.template);
-	},
 
-    render:function () {
-        $(this.el).html(this.template);
-        this.listarRubros();
-        return this;
-    },
-
-	listarRubros: function(){
-	  var self = this;
-	  console.log(self);
-	  rubrosLista = new listadoRubros({'barrio':self.barrio_id});
-	  rubrosLista.fetch({success:function(){
-	  	if (rubrosLista.length) {     	
-	     	$("#listadoRubros").empty();
-	     	$("#listadoRubros").append("<ul></ul>");
-		    rubrosLista.each(function(n,o,l){
-	     		var viewListaRubros = new listaRubrosView({model:n});
-	     		$("#listadoRubros > ul").append(viewListaRubros.render().el);
-	     	});
-     	}
-
-
-
-	  },error:function(){alert('Error');}});
-		
-	},
-
-});
-*/
 window.ExplorarRubroView = genericView.extend({// Backbone.View.extend({
 
   	events: {
@@ -719,7 +677,7 @@ window.ExplorarRubroView = genericView.extend({// Backbone.View.extend({
 	  },error:function(collection,xhr,options){
 	  			console.log(xhr.state());
 	  			if(xhr.state() == 'rejected'){
-	  				app.navigate("login");
+	  				app.navigate("login",{trigger: true});
 	  			}
 	  			
 			}
