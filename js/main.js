@@ -94,14 +94,16 @@
 //listado multi rubros
  var listadoRubros = Backbone.Collection.extend({
  	model: rubro,
-     comparator: function(model) {
+    /* comento el comparador
+      comparator: function(model) {
     	return [(model.get("nivel")==1)?2:1, model.get("nombre")];
 	 },
+	 */
     initialize: function(vars){
-    	if(typeof vars === 'undefined'){
-	    	this.url = "http://miheladera-ateszki.dotcloud.com/api.php/rubros.json?lat="+app.lat+"&long="+app.lng+"&api_key="+app.api_key;
+    	if(typeof vars.barrio === 'undefined'){
+	    	this.url = "http://miheladera-ateszki.dotcloud.com/api.php/rubros.json?nivel="+vars.nivel+"&lat="+app.lat+"&long="+app.lng+"&api_key="+app.api_key;
     	} else {
-	    	this.url= "http://miheladera-ateszki.dotcloud.com/api.php/rubros.json?barrios="+vars.barrio+"&api_key="+app.api_key;
+	    	this.url= "http://miheladera-ateszki.dotcloud.com/api.php/rubros.json?nivel="+vars.nivel+"&barrios="+vars.barrio+"&api_key="+app.api_key;
     	}
     },
     
@@ -226,10 +228,16 @@
     		barrio = '';
     		barrio_id = '';
     	}
+    	
+    	if (vars.toNivel == 2){
+    		cssNombre = "rubroLinkComidas";
+    	} else {
+    		cssNombre = "rubroLink";
+    	}
 		//con links
 		//this.template = _.template('<a href="explorar-rubro.html?id=<%= id %>&nombre=<%= nombre %>" class="rubroLink" data-rubroId="<%= id %>"><%= nombre %> (<%= Comercios %>)</a>');
 		// sin links para performance test 
-		this.template = _.template('<div data-rubroNombre="<%= nombre %>" class="rubroLink" data-barrio="'+barrio+'" data-barrioid="'+barrio_id+'" data-rubroId="<%= id %>"><%= nombre %> (<%= Comercios %>)</div>');
+		this.template = _.template('<div data-rubroNombre="<%= nombre %>" class="'+cssNombre+'" data-barrio="'+barrio+'" data-barrioid="'+barrio_id+'" data-rubroId="<%= id %>"><%= nombre %> (<%= Comercios %>)</div>');
      },
 
     render: function() {
@@ -524,7 +532,8 @@ window.ExplorarView = genericView.extend({// Backbone.View.extend({
 
     //template:_.template($('#Explorar').html()),
   	events: {
-  		"click div.rubroLink": "rubroLink"
+  		"click div.rubroLink": "rubroLink",
+  		"click div.rubroLinkComidas": "rubroLinkComidas"
   	},
     
 	initialize: function(tipo){
@@ -536,6 +545,7 @@ window.ExplorarView = genericView.extend({// Backbone.View.extend({
 			this.barrio = b.barrio; 
 			this.barrio_id = b.barrio_id; 
 		} 
+		this.nivel = tipo.nivel;
 	},
 
 	template: _.template(templates.explorar),
@@ -548,25 +558,43 @@ window.ExplorarView = genericView.extend({// Backbone.View.extend({
         	$(this.el).html(this.template());
         
         }
-        this.listarRubros();
+        this.listarRubros(this.nivel);
         return this;
     },
 
-	listarRubros: function(){
+	listarRubros: function(nivel){
 	  var self = this;
 	  if(typeof(this.barrio_id) != 'undefined'){
-	  	rubrosLista = new listadoRubros({'barrio': this.barrio_id});
+	  	rubrosLista = new listadoRubros({'nivel':nivel,'barrio': this.barrio_id});
 	  } else{
-	  	rubrosLista = new listadoRubros();
+	  	rubrosLista = new listadoRubros({'nivel':nivel});
 	  }
+
 	  rubrosLista.fetch({success:function(){
+	  	if (rubrosLista.length) {     	
+	     	$(".listadoRubros > ul").empty();
+	     	rubrosLista.each(function(n,o,l){
+		    	console.log(n.get('nivel')+' '+n.get('nombre'));
+	     		if (n.get("nombre") == 'Comidas'){
+	     			toNivel = 2;
+	     		} else {
+	     			toNivel = 1;
+	     		}
+	     		var viewListaRubros = new listaRubrosView({model:n,barrio:self.barrio,barrio_id:self.barrio_id,'toNivel':toNivel});
+	     		$(".listadoRubros > ul").append(viewListaRubros.render().el);
+	     		
+	     	});
+     	}
+/*
+ * para volver atras descomentar el comparador 
+ 	  rubrosLista.fetch({success:function(){
 	  	if (rubrosLista.length) {     	
 	     	$(".listadoRubros > ul").empty();
 	     	//$("#scroller.listadoRubros").append("<ul></ul>");
 	     	$(".listadoRubros > ul").append('<li data-role="list-divider" data-theme="a">COMIDAS</li>');
 	     	var cambio = false;
 		    rubrosLista.each(function(n,o,l){
-		    	//console.log(n.get('nivel')+' '+n.get('nombre'));
+		    	console.log(n.get('nivel')+' '+n.get('nombre'));
 	     		if (n.get("nombre") != 'Comidas'){
 		     		if (cambio == false && n.get('nivel')==1){
 		     			$(".listadoRubros > ul").append('<li data-role="list-divider" data-theme="a">OTROS</li>');
@@ -577,8 +605,9 @@ window.ExplorarView = genericView.extend({// Backbone.View.extend({
 	     		}
 	     	});
      	}
+*/
     	$(".listadoRubros > ul").listview('refresh');
-		$(".content-wrapper").jqmData("iscrollview").refresh();
+    	$(".content-wrapper").jqmData("iscrollview").refresh();
 
 	var vista = $('.content-wrapper').jqmData('iscrollview');
     vista.$wrapper.bind("iscroll_onscrollmove", function ()  {
@@ -607,6 +636,17 @@ window.ExplorarView = genericView.extend({// Backbone.View.extend({
     	if (barrio_id != ''){
     		destino += "/"+barrio_id+"/"+barrio;
     	}
+    	app.navigate(destino,{trigger: true});
+    	}
+    },
+    rubroLinkComidas: function(ev){
+    	if (!scrolling){
+    	if (typeof(this.barrio_id) != 'undefined' ){
+        	t = 'Barrio';
+       } else {
+       		t = 'cercanos';
+       }
+    	var destino = "Explorar/"+t+"/"+2;
     	app.navigate(destino,{trigger: true});
     	}
     },
@@ -722,6 +762,7 @@ var AppRouter = Backbone.Router.extend({
         "login":"login",
         "MiHeladera":"MiHeladera",
         "Explorar/:tipo":"Explorar",
+        "Explorar/:tipo(/:nivel)":"Explorar",
         "ExplorarRubro/:rId/:rNombre(/:bId/:bNombre)":"ExplorarRubro",
         "Ofertas": "Ofertas",
         "Cuenta":"Cuenta",
@@ -752,11 +793,14 @@ var AppRouter = Backbone.Router.extend({
         this.changePage(new MiHeladeraView());
     },
 
-    Explorar:function (tipo) {
+    Explorar:function (tipo,nivel) {
         console.log('#Explorar');
+        if (typeof (nivel) == 'undefined'){
+        	nivel = 1;
+        }
+        console.log('Nivel: '+nivel);
         (typeof tipo == 'undefined')? rTipo = 'cercanos':rTipo = tipo;
-        console.log(rTipo);
-       this.changePage(new ExplorarView({"rTipo":rTipo}));
+        this.changePage(new ExplorarView({"rTipo":rTipo,"nivel":nivel}));
     },
 
     ExplorarBarrio:function () {
